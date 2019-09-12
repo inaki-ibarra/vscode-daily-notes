@@ -35,6 +35,7 @@ This extension contributes the following settings:
 
 ## Known Issues
 
+* You may get an error 'extension.open failed' when there's no open folder in your workspace. You can fix this by setting 'dailyNotes.filePath' in config or opening a folder first, then Alt + N.
 * If you are using remote Windows Subsystem for Linux a.k.a WSL for VSCode, the file path format from Windows may not work.
 This can be solved easily by using the file path from WSL e.g. ```/mnt/c/projects```.
 
