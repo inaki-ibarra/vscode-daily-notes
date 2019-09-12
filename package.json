@@ -2,7 +2,7 @@
 	"name": "vscode-daily-notes",
 	"displayName": "VSCode Daily Notes",
 	"description": "A simple text-based journal extension for Visual Studio Code",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"engines": {
 		"vscode": "^1.38.0"
 	},
@@ -45,7 +45,9 @@
 		"glob": "^7.1.4",
 		"mocha": "^6.1.4",
 		"typescript": "^3.3.1",
-		"vscode-test": "^1.2.0",
+		"vscode-test": "^1.2.0"
+  },
+  "dependencies": {
     "firstline": "2.0.2"
   },
   "publisher": "inaki",
