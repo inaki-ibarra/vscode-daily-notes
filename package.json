@@ -2,7 +2,8 @@
 	"name": "vscode-daily-notes",
 	"displayName": "VSCode Daily Notes",
 	"description": "A simple text-based journal extension for Visual Studio Code",
-	"version": "1.0.1",
+  "version": "1.0.2",
+  "icon": "images/icon.png",
 	"engines": {
 		"vscode": "^1.38.0"
 	},
