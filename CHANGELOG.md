@@ -6,7 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
-## [1.0.3] - 2019-09-12
+## [1.0.4] - 2019-09-13
+### Changed
+- Save in home directory instead of workspace folder when filepath is not defined
+
+## [1.0.3] - 2019-09-13
 ### Added
 - Error when there's no folder in workspace and missing filepath
 

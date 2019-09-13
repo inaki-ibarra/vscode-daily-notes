@@ -23,9 +23,9 @@ If the Daily Notes file is already open:
 * Press ```Ctrl+W``` to close the file
 * Press ```Ctrl+S``` to save the file
 
-If you don't want to save Daily Notes file in current workspace:
+You may save your note file anywhere:
 
-* Create a new file ```daily-notes.md```, copy the path and set the ```dailyNotes.filePath``` in config
+* Create a new file ```daily-notes.md```, copy the path and set the ```dailyNotes.filePath``` in config.
 
 ## Extension Settings
 
@@ -37,7 +37,6 @@ This extension contributes the following settings:
 
 ## Known Issues
 
-* You may get an error 'extension.open failed' when there's no open folder in your workspace. You can fix this by setting ```dailyNotes.filePath``` in config or opening a folder first, then ```Alt+N```.
 * If you are using remote Windows Subsystem for Linux a.k.a WSL for VSCode, the file path format from Windows may not work.
 This can be solved easily by using the file path from WSL e.g. ```/mnt/c/projects```.
 
