@@ -32,17 +32,17 @@ If you don't want to save Daily Notes file in current workspace:
 This extension contributes the following settings:
 
 * `dailyNotes.filePath`: The complete location of the file to be used. When empty the file will be created in current worspace folder instead.
-  * Sample path for Windows: ```c:/Users/John//daily-notes.md```
+  * Sample path for Windows: ```c:/Users/John/daily-notes.md```
   * Sample path for Mac or Linux: ```/home/john/daily-notes.md```
 
 ## Known Issues
 
-* You may get an error 'extension.open failed' when there's no open folder in your workspace. You can fix this by setting 'dailyNotes.filePath' in config or opening a folder first, then Alt + N.
+* You may get an error 'extension.open failed' when there's no open folder in your workspace. You can fix this by setting ```dailyNotes.filePath``` in config or opening a folder first, then ```Alt+N```.
 * If you are using remote Windows Subsystem for Linux a.k.a WSL for VSCode, the file path format from Windows may not work.
 This can be solved easily by using the file path from WSL e.g. ```/mnt/c/projects```.
 
 ## Installation
-
+View in [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=inaki.vscode-daily-notes) for more info.
 1. In VSCode, go to Extensions ```Ctrl+Shift+X```
 2. Type **VSCode Daily Notes** in search box
 3. Click **Install**
