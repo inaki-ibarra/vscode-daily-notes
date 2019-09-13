@@ -31,7 +31,7 @@ You may save your note file anywhere:
 
 This extension contributes the following settings:
 
-* `dailyNotes.filePath`: The complete location of the file to be used. When empty the file will be created in current worspace folder instead.
+* `dailyNotes.filePath`: The complete location of the file to be used. When empty the file will be created in user's home directory.
   * Sample path for Windows: ```c:/Users/John/daily-notes.md```
   * Sample path for Mac or Linux: ```/home/john/daily-notes.md```
 
