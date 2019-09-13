@@ -31,7 +31,9 @@ If you don't want to save Daily Notes file in current workspace:
 
 This extension contributes the following settings:
 
-* `dailyNotes.filePath`: The complete location of the file to be used. When empty the file will be created in current worspace instead.
+* `dailyNotes.filePath`: The complete location of the file to be used. When empty the file will be created in current worspace folder instead.
+  * Sample path for Windows: ```c:/Users/John//daily-notes.md```
+  * Sample path for Mac or Linux: ```/home/john/daily-notes.md```
 
 ## Known Issues
 
@@ -42,7 +44,7 @@ This can be solved easily by using the file path from WSL e.g. ```/mnt/c/project
 ## Installation
 
 1. In VSCode, go to Extensions ```Ctrl+Shift+X```
-2. Type **Daily Notes** in search box
+2. Type **VSCode Daily Notes** in search box
 3. Click **Install**
 
 ## License
