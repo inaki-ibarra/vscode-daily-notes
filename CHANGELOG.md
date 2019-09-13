@@ -6,6 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.0.3] - 2019-09-12
+### Added
+- Error when there's no folder in workspace and missing filepath
+
 ## [1.0.2] - 2019-09-12
 ### Added
 - Extension Icon

@@ -10,6 +10,10 @@ function activate(context) {
 	let disposable = vscode.commands.registerCommand('extension.open', function () {
     const filePath = getFilePath();
 
+    if (!filePath) {
+      return vscode.window.showErrorMessage("Open a folder in your workspace first or set DailyNotes.FilePath in Config");
+    }
+
     if (fs.existsSync(filePath)) {
       prependDateHeader(filePath);
     } else {
@@ -17,16 +21,21 @@ function activate(context) {
     }
 
     vscode.workspace.openTextDocument(filePath).then(doc => {
-      vscode.window.showTextDocument(doc);
+      vscode.window.showTextDocument(doc, { preview: true });
     });
   });
 
   function getFilePath() {
     const configFilePath = vscode.workspace.getConfiguration().get('dailyNotes.filePath');
-    if (configFilePath == "") {
-      return vscode.workspace.workspaceFolders[0].uri.fsPath + "/daily-notes.md";
+    const workspaceFolders = vscode.workspace.workspaceFolders;
+
+    if (configFilePath) {
+      return configFilePath;
+    } else if (workspaceFolders && workspaceFolders.length > 0) {
+      return workspaceFolders[0].uri.fsPath + "/daily-notes.md";
+    } else {
+      return null;
     }
-    return configFilePath;
   }
 
   function dateHeader() {
