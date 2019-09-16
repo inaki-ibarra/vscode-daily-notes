@@ -6,6 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.0.5] - 2019-09-16
+### Changed
+- Minor typo improvements
+
 ## [1.0.4] - 2019-09-13
 ### Changed
 - Save in home directory instead of workspace folder when filepath is not defined
