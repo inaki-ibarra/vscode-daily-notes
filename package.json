@@ -1,24 +1,33 @@
 {
-	"name": "vscode-daily-notes",
-	"displayName": "VSCode Daily Notes",
-	"description": "A simple text-based journal extension for Visual Studio Code",
+  "name": "vscode-daily-notes",
+  "displayName": "VSCode Daily Notes",
+  "description": "A simple text-based journal extension for Visual Studio Code",
+  "keywords": [
+    "daily notes",
+    "notes",
+    "journal",
+    "markdown",
+    "text"
+  ],
   "version": "1.0.4",
   "icon": "images/icon.png",
-	"engines": {
-		"vscode": "^1.38.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"onCommand:extension.open"
-	],
-	"main": "./extension.js",
-	"contributes": {
-		"commands": [{
-      "command": "extension.open",
-			"title": "Open Daily Notes"
-    }],
+  "engines": {
+    "vscode": "^1.38.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.open"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.open",
+        "title": "Open Daily Notes"
+      }
+    ],
     "keybindings": {
       "command": "extension.open",
       "key": "alt+n"
@@ -33,20 +42,20 @@
         }
       }
     }
-	},
-	"scripts": {
+  },
+  "scripts": {
     "test": "node ./test/runTest.js"
-	},
-	"devDependencies": {
-		"@types/glob": "^7.1.1",
-		"@types/mocha": "^5.2.6",
-		"@types/node": "^10.12.21",
-		"@types/vscode": "^1.38.0",
-		"eslint": "^5.13.0",
-		"glob": "^7.1.4",
-		"mocha": "^6.1.4",
-		"typescript": "^3.3.1",
-		"vscode-test": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.1",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^10.12.21",
+    "@types/vscode": "^1.38.0",
+    "eslint": "^5.13.0",
+    "glob": "^7.1.4",
+    "mocha": "^6.1.4",
+    "typescript": "^3.3.1",
+    "vscode-test": "^1.2.0"
   },
   "dependencies": {
     "firstline": "2.0.2"
