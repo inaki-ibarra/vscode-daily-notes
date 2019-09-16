@@ -43,7 +43,7 @@ function activate(context) {
         prependFile(filePath, dateHeader(), (error) => {
           if (error) {
             console.error(error);
-            return vscode.window.showErrorMessage("Cannot edit daily notes file.");
+            return vscode.window.showErrorMessage("Cannot edit Daily Notes File.");
           }
         });
       }
