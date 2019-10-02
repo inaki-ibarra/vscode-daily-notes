@@ -41,7 +41,25 @@
           "description": "Set the exact location of the file"
         }
       }
-    }
+    },
+    "languages": [
+      {
+        "id": "Plain Text",
+        "extensions": [
+          ".txt"
+        ]
+      }
+    ],
+    "grammars": [
+      {
+        "language": "Plain Text",
+        "scopeName": "text.notes",
+        "path": "./syntaxes/notes.tmGrammar.json",
+        "injectTo": [
+          "text.html.markdown"
+        ]
+      }
+    ]
   },
   "scripts": {
     "test": "node ./test/runTest.js"

@@ -1,0 +1,22 @@
+{
+  "scopeName": "text.notes",
+  "injectionSelector": "L:text.html.markdown",
+  "patterns": [
+    {
+      "match": "#Info|#Important",
+      "name": "text.notes.info"
+    },
+    {
+      "match": "#Success|#Remember",
+      "name": "text.notes.success"
+    },
+    {
+      "match": "#Warning|#Alert",
+      "name": "text.notes.warning"
+    },
+    {
+      "match": "#Danger|#Critical",
+      "name": "text.notes.danger"
+    }
+  ]
+}
