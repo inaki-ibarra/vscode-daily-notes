@@ -6,6 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.0.6] - 2019-10-03
+### Added
+- Add syntax highlighting for selected tags
+
 ## [1.0.5] - 2019-09-16
 ### Changed
 - Minor typo improvements
