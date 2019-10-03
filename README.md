@@ -7,8 +7,11 @@ A simple text-based journal extension for Visual Studio Code.
 * Access your Daily Notes conveniently with a shortcut: ```Alt+N```
 * Date header is generated automatically
 * Made in Markdown format so VSCode preview is possible with: ```Ctrl+Shift+V```
+* Syntax highlighting for selected tags
 
 ![Feature](images/feature.gif)
+
+![Feature](images/highlighted-tags.jpg)
 
 ## Usage
 
@@ -34,6 +37,8 @@ This extension contributes the following settings:
 * `dailyNotes.filePath`: The complete location of the file to be used. When empty the file will be created in user's home directory.
   * Sample path for Windows: ```c:/Users/John/daily-notes.md```
   * Sample path for Mac or Linux: ```/home/john/daily-notes.md```
+
+* `editor.tokenColorCustomizations.textMateRules`: You can customize tag colors here.
 
 ## Known Issues
 
