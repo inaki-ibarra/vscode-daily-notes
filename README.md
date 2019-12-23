@@ -51,5 +51,9 @@ View in [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName
 2. Type **VSCode Daily Notes** in search box
 3. Click **Install**
 
+## Contributing
+- Pull requests are welcome for features and bug fixes
+- Feel free to create issues when you encounter problems
+
 ## License
 The extension is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
