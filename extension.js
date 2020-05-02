@@ -1,6 +1,7 @@
 const vscode = require("vscode");
 const fs = require("fs");
 const firstline = require("firstline");
+const moment = require("moment");
 const homedir = require("os").homedir();
 
 /**
@@ -9,7 +10,7 @@ const homedir = require("os").homedir();
 function activate(context) {
   let disposable = vscode.commands.registerCommand(
     "extension.open",
-    function() {
+    function () {
       const filePath = getFilePath();
 
       setSyntaxHighlight(context.extensionPath);
@@ -36,7 +37,7 @@ function activate(context) {
     fs.readFile(
       extensionPath + "/syntaxes/custom-colors.json",
       "utf8",
-      function(error, colors) {
+      function (error, colors) {
         let mutableConfig = JSON.parse(JSON.stringify(currentConfig));
 
         mutableConfig.textMateRules = JSON.parse(colors.toString());
@@ -66,7 +67,15 @@ function activate(context) {
 
   function dateHeader() {
     const today = new Date();
-    return "## " + today.toDateString() + "\r\n\r\n\r\n";
+    const configDateFormat = vscode.workspace
+      .getConfiguration()
+      .get("dailyNotes.dateFormat");
+
+    if (configDateFormat) {
+      return "## " + moment(today).format(configDateFormat) + "\r\n\r\n\r\n";
+    } else {
+      return "## " + today.toDateString() + "\r\n\r\n\r\n";
+    }
   }
 
   function prependDateHeader(filePath) {
@@ -85,7 +94,7 @@ function activate(context) {
   }
 
   function prependFile(filePath, content, callback) {
-    fs.readFile(filePath, "utf8", function(error, result) {
+    fs.readFile(filePath, "utf8", function (error, result) {
       if (error && error.code !== "ENOENT") {
         callback(error);
       } else {
@@ -113,7 +122,7 @@ function activate(context) {
 }
 exports.activate = activate;
 
-function deactivate() {}
+function deactivate() { }
 
 module.exports = {
   activate,
