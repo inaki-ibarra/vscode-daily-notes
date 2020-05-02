@@ -34,7 +34,7 @@ You may save your note file anywhere:
 
 This extension contributes the following settings:
 
-* `dailyNotes.dateFormat`: Allows custom formatting of date header. Leave it empty to use default format. You can see formmating options [here](https://momentjs.com/docs/#/displaying/format/).
+* `dailyNotes.dateFormat`: Allows custom formatting of date header. Leave it empty to use default format. You can see formatting options [here](https://momentjs.com/docs/#/displaying/format/).
 
 * `dailyNotes.filePath`: The complete location of the file to be used. When empty the file will be created in user's home directory.
   * Sample path for Windows: ```c:/Users/John/daily-notes.md```
