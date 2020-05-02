@@ -6,9 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
-### Changed
+## [1.0.7] - 2020-05-02
 
-- Bump VSCode version
+### Added
+- Add config for date format
 
 ## [1.0.6] - 2019-10-03
 

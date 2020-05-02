@@ -39,6 +39,11 @@
           "type": "string",
           "default": "",
           "description": "Set the exact location of the file"
+        },
+        "dailyNotes.dateFormat": {
+          "type": "string",
+          "default": "",
+          "description": "Set the format of date header"
         }
       }
     },
@@ -76,7 +81,8 @@
     "vscode-test": "^1.2.0"
   },
   "dependencies": {
-    "firstline": "2.0.2"
+    "firstline": "2.0.2",
+    "moment": "^2.25.1"
   },
   "publisher": "inaki",
   "repository": {
