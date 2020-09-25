@@ -18,7 +18,8 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.open"
+    "onCommand:extension.open",
+    "onCommand:extension.addQuickNote"
   ],
   "main": "./extension.js",
   "contributes": {
@@ -26,6 +27,10 @@
       {
         "command": "extension.open",
         "title": "Open Daily Notes"
+      },
+      {
+        "command": "extension.addQuickNote",
+        "title": "Add Quick Single Note"
       }
     ],
     "keybindings": {

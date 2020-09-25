@@ -8,22 +8,37 @@ const homedir = require("os").homedir();
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-  let disposable = vscode.commands.registerCommand(
+  let openNotesCommand = vscode.commands.registerCommand(
     "extension.open",
     function () {
-      const filePath = getFilePath();
+      const filePath = getAndPrepareFilePath();
 
-      setSyntaxHighlight(context.extensionPath);
-
-      if (fs.existsSync(filePath)) {
-        prependDateHeader(filePath);
-      } else {
-        createNewNote(filePath);
-      }
-
-      vscode.workspace.openTextDocument(filePath).then(doc => {
+      vscode.workspace.openTextDocument(filePath).then((doc) => {
         vscode.window.showTextDocument(doc);
       });
+    }
+  );
+
+  let addQuickNoteCommand = vscode.commands.registerCommand(
+    "extension.addQuickNote",
+    function () {
+      vscode.window
+        .showInputBox({
+          ignoreFocusOut: true,
+          prompt: `Enter text to add to notes 📘`,
+        })
+        .then((text) => {
+          if (!text) {
+            // Quick note canceled
+            return;
+          }
+
+          // bug: if getAndPrapareFilePath updates note, appendToFileAtLine does not work, this is a async problem, cant be fixed unless moving away from callback hell, 
+          // fix: fs is old library, move everything to fs promises/async await
+          // https://dev.to/mrm8488/from-callbacks-to-fspromises-to-handle-the-file-system-in-nodejs-56p2
+          const filePath = getAndPrepareFilePath();
+          appendToFileAtLine(filePath, text, 2, handleError);
+        });
     }
   );
 
@@ -53,6 +68,19 @@ function activate(context) {
     );
   }
 
+  function getAndPrepareFilePath() {
+    const filePath = getFilePath();
+
+    setSyntaxHighlight(context.extensionPath);
+
+    if (fs.existsSync(filePath)) {
+      prependDateHeader(filePath);
+    } else {
+      createNewNote(filePath);
+    }
+    return filePath;
+  }
+
   function getFilePath() {
     const configFilePath = vscode.workspace
       .getConfiguration()
@@ -78,17 +106,17 @@ function activate(context) {
     }
   }
 
+  function handleError(error) {
+    if (error) {
+      console.error(error);
+      return vscode.window.showErrorMessage("Cannot edit Daily Notes File.");
+    }
+  }
+
   function prependDateHeader(filePath) {
-    firstline(filePath).then(lastDateHeader => {
+    firstline(filePath).then((lastDateHeader) => {
       if (lastDateHeader.trim() != dateHeader().trim()) {
-        prependFile(filePath, dateHeader(), error => {
-          if (error) {
-            console.error(error);
-            return vscode.window.showErrorMessage(
-              "Cannot edit Daily Notes File."
-            );
-          }
-        });
+        prependFile(filePath, dateHeader(), handleError);
       }
     });
   }
@@ -107,8 +135,24 @@ function activate(context) {
     });
   }
 
+  function appendToFileAtLine(filePath, content, lineNumber, callback) {
+    fs.readFile(filePath, "utf8", function (error, result) {
+      if (error && error.code !== "ENOENT") {
+      } else {
+        if (result) {
+          var lines = result.toString().split("\n");
+          lines.splice(lineNumber, 0, content);
+          content = lines.join("\n");
+        }
+
+        fs.writeFile(filePath, content, callback);
+      }
+    });
+  }
+
+
   function createNewNote(filePath) {
-    fs.writeFile(filePath, dateHeader(), error => {
+    fs.writeFile(filePath, dateHeader(), (error) => {
       if (error) {
         console.error(error);
         return vscode.window.showErrorMessage(
@@ -118,13 +162,13 @@ function activate(context) {
     });
   }
 
-  context.subscriptions.push(disposable);
+  context.subscriptions.push(openNotesCommand, addQuickNoteCommand);
 }
 exports.activate = activate;
 
-function deactivate() { }
+function deactivate() {}
 
 module.exports = {
   activate,
-  deactivate
+  deactivate,
 };
