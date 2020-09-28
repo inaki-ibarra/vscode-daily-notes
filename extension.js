@@ -8,8 +8,8 @@ const homedir = require("os").homedir();
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-  let openNotesCommand = vscode.commands.registerCommand(
-    "extension.open",
+  let openCommand = vscode.commands.registerCommand(
+    "dailyNotes.open",
     function () {
       const filePath = getAndPrepareFilePath();
 
@@ -19,8 +19,8 @@ function activate(context) {
     }
   );
 
-  let addQuickNoteCommand = vscode.commands.registerCommand(
-    "extension.addQuickNote",
+  let insertCommand = vscode.commands.registerCommand(
+    "dailyNotes.insert",
     function () {
       vscode.window
         .showInputBox({
@@ -33,7 +33,7 @@ function activate(context) {
             return;
           }
 
-          // bug: if getAndPrapareFilePath updates note, appendToFileAtLine does not work, this is a async problem, cant be fixed unless moving away from callback hell, 
+          // bug: if getAndPrapareFilePath updates note, appendToFileAtLine does not work, this is a async problem, cant be fixed unless moving away from callback hell,
           // fix: fs is old library, move everything to fs promises/async await
           // https://dev.to/mrm8488/from-callbacks-to-fspromises-to-handle-the-file-system-in-nodejs-56p2
           const filePath = getAndPrepareFilePath();
@@ -150,7 +150,6 @@ function activate(context) {
     });
   }
 
-
   function createNewNote(filePath) {
     fs.writeFile(filePath, dateHeader(), (error) => {
       if (error) {
@@ -162,7 +161,7 @@ function activate(context) {
     });
   }
 
-  context.subscriptions.push(openNotesCommand, addQuickNoteCommand);
+  context.subscriptions.push(openCommand, insertCommand);
 }
 exports.activate = activate;
 
