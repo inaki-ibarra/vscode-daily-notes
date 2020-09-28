@@ -29,7 +29,7 @@ function activate(context) {
         })
         .then((text) => {
           if (!text) {
-            // Quick note canceled
+            // canceled
             return;
           }
 
@@ -138,6 +138,7 @@ function activate(context) {
   function appendToFileAtLine(filePath, content, lineNumber, callback) {
     fs.readFile(filePath, "utf8", function (error, result) {
       if (error && error.code !== "ENOENT") {
+        callback(error);
       } else {
         if (result) {
           var lines = result.toString().split("\n");
