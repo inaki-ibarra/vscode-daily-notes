@@ -1,5 +1,6 @@
 const vscode = require("vscode");
-const fs = require("fs");
+const fsp = require("fs").promises;
+const existsSync = require("fs").existsSync;
 const firstline = require("firstline");
 const moment = require("moment");
 const homedir = require("os").homedir();
@@ -10,8 +11,9 @@ const homedir = require("os").homedir();
 function activate(context) {
   let openCommand = vscode.commands.registerCommand(
     "dailyNotes.open",
-    function () {
-      const filePath = getAndPrepareFilePath();
+    async function () {
+      await prepareFile();
+      const filePath = getFilePath();
 
       vscode.workspace.openTextDocument(filePath).then((doc) => {
         vscode.window.showTextDocument(doc);
@@ -27,58 +29,61 @@ function activate(context) {
           ignoreFocusOut: true,
           prompt: `Enter text to add to notes 📘`,
         })
-        .then((text) => {
+        .then(async (text) => {
           if (!text) {
             // canceled
             return;
           }
 
-          // bug: if getAndPrapareFilePath updates note, appendToFileAtLine does not work, this is a async problem, cant be fixed unless moving away from callback hell,
-          // fix: fs is old library, move everything to fs promises/async await
-          // https://dev.to/mrm8488/from-callbacks-to-fspromises-to-handle-the-file-system-in-nodejs-56p2
-          const filePath = getAndPrepareFilePath();
-          appendToFileAtLine(filePath, text, 2, handleError);
+          await prepareFile();
+          const filePath = getFilePath();
+          try {
+            await appendToFileAtLine(filePath, text, 2);
+          } catch (error) {
+            console.error(error);
+            return vscode.window.showErrorMessage(
+              "Cannot edit Daily Notes File."
+            );
+          }
         });
     }
   );
 
-  function setSyntaxHighlight(extensionPath) {
+  async function setSyntaxHighlight(extensionPath) {
     const currentConfig = vscode.workspace.getConfiguration(
       "editor.tokenColorCustomizations"
     );
 
     if (currentConfig.has("textMateRules")) return;
 
-    fs.readFile(
+    const colors = await fsp.readFile(
       extensionPath + "/syntaxes/custom-colors.json",
-      "utf8",
-      function (error, colors) {
-        let mutableConfig = JSON.parse(JSON.stringify(currentConfig));
-
-        mutableConfig.textMateRules = JSON.parse(colors.toString());
-
-        vscode.workspace
-          .getConfiguration("editor")
-          .update(
-            "tokenColorCustomizations",
-            mutableConfig,
-            vscode.ConfigurationTarget.Global
-          );
-      }
+      "utf8"
     );
+
+    let mutableConfig = JSON.parse(JSON.stringify(currentConfig));
+
+    mutableConfig.textMateRules = JSON.parse(colors.toString());
+
+    vscode.workspace
+      .getConfiguration("editor")
+      .update(
+        "tokenColorCustomizations",
+        mutableConfig,
+        vscode.ConfigurationTarget.Global
+      );
   }
 
-  function getAndPrepareFilePath() {
+  async function prepareFile() {
     const filePath = getFilePath();
 
-    setSyntaxHighlight(context.extensionPath);
+    await setSyntaxHighlight(context.extensionPath);
 
-    if (fs.existsSync(filePath)) {
-      prependDateHeader(filePath);
+    if (existsSync(filePath)) {
+      await prependDateHeader(filePath);
     } else {
-      createNewNote(filePath);
+      await createNewNote(filePath);
     }
-    return filePath;
   }
 
   function getFilePath() {
@@ -106,60 +111,42 @@ function activate(context) {
     }
   }
 
-  function handleError(error) {
-    if (error) {
-      console.error(error);
-      return vscode.window.showErrorMessage("Cannot edit Daily Notes File.");
+  async function prependDateHeader(filePath) {
+    const lastDateHeader = await firstline(filePath);
+    if (lastDateHeader.trim() != dateHeader().trim()) {
+      await prependFile(filePath, dateHeader());
     }
   }
 
-  function prependDateHeader(filePath) {
-    firstline(filePath).then((lastDateHeader) => {
-      if (lastDateHeader.trim() != dateHeader().trim()) {
-        prependFile(filePath, dateHeader(), handleError);
-      }
-    });
+  async function prependFile(filePath, content) {
+    const result = await fsp.readFile(filePath, "utf8");
+
+    if (result) {
+      content = content + "\n" + result;
+    }
+
+    await fsp.writeFile(filePath, content);
   }
 
-  function prependFile(filePath, content, callback) {
-    fs.readFile(filePath, "utf8", function (error, result) {
-      if (error && error.code !== "ENOENT") {
-        callback(error);
-      } else {
-        if (result) {
-          content = content + "\n" + result;
-        }
+  async function appendToFileAtLine(filePath, content, lineNumber) {
+    const result = await fsp.readFile(filePath, "utf8");
 
-        fs.writeFile(filePath, content, callback);
-      }
-    });
+    var lines = result.toString().split("\n");
+    lines.splice(lineNumber, 0, content);
+    content = lines.join("\n");
+
+    await fsp.writeFile(filePath, content);
   }
 
-  function appendToFileAtLine(filePath, content, lineNumber, callback) {
-    fs.readFile(filePath, "utf8", function (error, result) {
-      if (error && error.code !== "ENOENT") {
-        callback(error);
-      } else {
-        if (result) {
-          var lines = result.toString().split("\n");
-          lines.splice(lineNumber, 0, content);
-          content = lines.join("\n");
-        }
-
-        fs.writeFile(filePath, content, callback);
-      }
-    });
-  }
-
-  function createNewNote(filePath) {
-    fs.writeFile(filePath, dateHeader(), (error) => {
-      if (error) {
-        console.error(error);
-        return vscode.window.showErrorMessage(
-          "Please set correct Daily Notes File Path in Config."
-        );
-      }
-    });
+  async function createNewNote(filePath) {
+    try {
+      await fsp.writeFile(filePath, dateHeader());
+    } catch (error) {
+      console.error(error);
+      return vscode.window.showErrorMessage(
+        "Please set correct Daily Notes File Path in Config."
+      );
+    }
   }
 
   context.subscriptions.push(openCommand, insertCommand);
