@@ -35,9 +35,9 @@ function activate(context) {
             return;
           }
 
-          await prepareFile();
-          const filePath = getFilePath();
           try {
+            await prepareFile();
+            const filePath = getFilePath();
             await appendToFileAtLine(filePath, text, 2);
           } catch (error) {
             console.error(error);
@@ -119,23 +119,37 @@ function activate(context) {
   }
 
   async function prependFile(filePath, content) {
-    const result = await fsp.readFile(filePath, "utf8");
+    try {
+      const result = await fsp.readFile(filePath, "utf8");
 
-    if (result) {
-      content = content + "\n" + result;
+      if (result) {
+        content = content + "\n" + result;
+      }
+
+      await fsp.writeFile(filePath, content);
+    } catch (error) {
+      if (error && error.code !== "ENOENT") {
+        console.error(error);
+        vscode.window.showErrorMessage("Cannot edit Daily Notes File.");
+      }
     }
-
-    await fsp.writeFile(filePath, content);
   }
 
   async function appendToFileAtLine(filePath, content, lineNumber) {
-    const result = await fsp.readFile(filePath, "utf8");
+    try {
+      const result = await fsp.readFile(filePath, "utf8");
 
-    var lines = result.toString().split("\n");
-    lines.splice(lineNumber, 0, content);
-    content = lines.join("\n");
+      var lines = result.toString().split("\n");
+      lines.splice(lineNumber, 0, content);
+      content = lines.join("\n");
 
-    await fsp.writeFile(filePath, content);
+      await fsp.writeFile(filePath, content);
+    } catch (error) {
+      if (error && error.code !== "ENOENT") {
+        console.error(error);
+        vscode.window.showErrorMessage("Cannot edit Daily Notes File.");
+      }
+    }
   }
 
   async function createNewNote(filePath) {
