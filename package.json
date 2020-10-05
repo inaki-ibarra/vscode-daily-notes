@@ -18,20 +18,31 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.open"
+    "onCommand:dailyNotes.open",
+    "onCommand:dailyNotes.insert"
   ],
   "main": "./extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "extension.open",
-        "title": "Open Daily Notes"
+        "command": "dailyNotes.open",
+        "title": "Daily Notes: Open"
+      },
+      {
+        "command": "dailyNotes.insert",
+        "title": "Daily Notes: Insert"
       }
     ],
-    "keybindings": {
-      "command": "extension.open",
-      "key": "alt+n"
-    },
+    "keybindings": [
+      {
+        "command": "dailyNotes.open",
+        "key": "alt+n"
+      },
+      {
+        "command": "dailyNotes.insert",
+        "key": "alt+N"
+      }
+    ],
     "configuration": {
       "title": "Daily Notes",
       "properties": {
