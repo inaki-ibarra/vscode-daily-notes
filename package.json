@@ -40,7 +40,7 @@
       },
       {
         "command": "dailyNotes.insert",
-        "key": "alt+N"
+        "key": "alt+i"
       }
     ],
     "configuration": {
