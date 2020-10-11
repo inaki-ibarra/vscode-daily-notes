@@ -89,7 +89,8 @@ function activate(context) {
   function getFilePath() {
     const configFilePath = vscode.workspace
       .getConfiguration()
-      .get("dailyNotes.filePath");
+      .get("dailyNotes.filePath")
+      .replace("~/", homedir.concat("/"));
 
     if (configFilePath) {
       return configFilePath;
@@ -158,7 +159,7 @@ function activate(context) {
     } catch (error) {
       console.error(error);
       return vscode.window.showErrorMessage(
-        "Please set correct Daily Notes File Path in Config."
+        `Cannot edit Daily Notes File in "${filePath}". Make sure the directory is present.`
       );
     }
   }
