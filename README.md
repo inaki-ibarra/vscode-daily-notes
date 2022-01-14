@@ -18,7 +18,7 @@ A simple text-based journal extension for Visual Studio Code.
 
 There are 2 ways to open Daily Notes file:
 
-* VSCode Command: `Ctrl+Shift+P` or `F1`, then type **Open Daily Notes**
+* VSCode Command: `Ctrl+Shift+P` or `F1`, then type `Daily Notes: Open`
 * Shortcut Key-bind: Press `Alt+N`
 
 If the Daily Notes file is already open:
