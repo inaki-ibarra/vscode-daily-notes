@@ -93,7 +93,7 @@
   },
   "dependencies": {
     "firstline": "2.0.2",
-    "moment": "^2.29.2"
+    "moment": "^2.29.4"
   },
   "publisher": "inaki",
   "repository": {
